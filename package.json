@@ -1,0 +1,40 @@
+{
+  "name": "net-snmp",
+  "version": "1.2.1",
+  "description": "JavaScript implementation of the Simple Network Management Protocol (SNMP)",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {
+    "asn1-ber": "^1.0.2",
+    "bunyan": "^1.8.12",
+    "express": "^4.16.3",
+    "nodemon": "^1.17.4",
+    "snmpjs": "^0.1.8",
+    "util": "^0.10.3"
+  },
+  "contributors": [
+    {
+      "name": "Stephen Vickers",
+      "email": "stephen.vickers.sv@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stephenwvickers/node-net-snmp.git"
+  },
+  "keywords": [
+    "snmp",
+    "snmpv1",
+    "snmpv2",
+    "snmpv2c",
+    "net",
+    "network",
+    "mon",
+    "monitor",
+    "monitoring"
+  ],
+  "author": "Stephen Vickers <stephen.vickers.sv@gmail.com>",
+  "license": "MIT"
+}
