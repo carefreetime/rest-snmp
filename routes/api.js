@@ -36,7 +36,7 @@ router.get('/get/:oid', function (req, res) {
                 if (snmp.isVarbindError (varbinds[i]))
                     res.send (snmp.varbindError (varbinds[i]));
                 else
-                    res.send (varbinds[i].oid + " | " + varbinds[i].value + " | " +ObjectType[varbinds[i].type]);
+                    res.json ({oid : varbinds[i].oid, value : varbinds[i].value.toString(), type : ObjectType[varbinds[i].type]});
             }
         }
     });
@@ -57,7 +57,7 @@ router.get('/getnext/:oid', function (req, res) {
                 if (snmp.isVarbindError (varbinds[i]))
                     res.send (snmp.varbindError (varbinds[i]));
                 else
-                    res.send (varbinds[i].oid + " | " + varbinds[i].value + " | " +ObjectType[varbinds[i].type]);
+                    res.json ({oid : varbinds[i].oid, value : varbinds[i].value.toString(), type : ObjectType[varbinds[i].type]});
             }
         }
     });
@@ -89,7 +89,7 @@ router.get('/getbulk/:n/:m/:oid1/:oid2', function (req, res) {
                 if (snmp.isVarbindError (varbinds[i]))
                     res.send (snmp.varbindError (varbinds[i]));
                 else
-                    content += (varbinds[i].oid + " | " + varbinds[i].value + " | " + ObjectType[varbinds[i].type] + "\n")
+                    content += ('{"oid" : "' + varbinds[i].oid +'", "value" : "' + varbinds[i].value + '", "type" : "' + ObjectType[varbinds[i].type] + '"}');
             }
             
             // then step through the repeaters which are varbind arrays
@@ -98,10 +98,11 @@ router.get('/getbulk/:n/:m/:oid1/:oid2', function (req, res) {
                     if (snmp.isVarbindError (varbinds[i][j]))
                         res.send (snmp.varbindError (varbinds[i][j]));
                     else
-                        content += (varbinds[i][j].oid + " | " + varbinds[i][j].value + " | " + ObjectType[varbinds[i][j].type] + "\n");
+                    content += (',{"oid" : "' + varbinds[i][j].oid +'", "value" : "' + varbinds[i][j].value + '", "type" : "' + ObjectType[varbinds[i][j].type] + '"}');
                 }
-            }
-            res.send (content);
+            };
+            content = "[" + content + "]";
+            res.json(JSON.parse(content));
         }
     });
 });
@@ -129,7 +130,7 @@ router.put('/set/:oid/:type/:value', function (req, res) {
             res.send (error.toString ());
         } else {
             for (var i = 0; i < varbinds.length; i++)
-                res.send (varbinds[i].oid + " | " + varbinds[i].value);
+                res.json ({oid : varbinds[i].oid, value : varbinds[i].value.toString(), type : ObjectType[varbinds[i].type]});
         }
     });
 });
