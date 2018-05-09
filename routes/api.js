@@ -68,6 +68,8 @@ router.get('/getbulk/:n/:m/:oid1/:oid2', function (req, res) {
     var nonRepeaters = 1;
     var maxRepetitions = 3;
     
+    var oids = [req.params.oid1, req.params.oid2];
+    
     var options = 1;
 
     var content = "";
