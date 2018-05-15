@@ -21,6 +21,14 @@ var ObjectType = {
 	130: "EndOfMibView"
 };
 
+function timeticks_conversion (timeticks) {
+    var d = Math.floor(timeticks / 8640000);
+    var h = Math.floor((timeticks - 8640000 * d) / 360000);
+    var m = Math.floor((timeticks - 8640000 * d - 360000 * h) / 6000);
+    var s = Math.floor((timeticks - 8640000 * d - 360000 * h - 6000 * m) / 100);
+    return (d+':'+h+':'+m+':'+s);
+}
+
 router.get('/get/:oid', function (req, res) {
 
     var version = 0;
@@ -30,13 +38,18 @@ router.get('/get/:oid', function (req, res) {
 
     session.get (oids, function (error, varbinds) {
         if (error) {
-            res.send (error.toString ());
+            res.json (error);
         } else {
             for (var i = 0; i < varbinds.length; i++) {
                 if (snmp.isVarbindError (varbinds[i]))
                     res.send (snmp.varbindError (varbinds[i]));
-                else
-                    res.json ({oid : varbinds[i].oid, value : varbinds[i].value.toString(), type : ObjectType[varbinds[i].type]});
+                else {
+                    if (varbinds[i].type == 67) {
+                        res.json ({oid : varbinds[i].oid, value : timeticks_conversion(varbinds[i].value.toString()), type : ObjectType[varbinds[i].type]});
+                    } else {
+                        res.json ({oid : varbinds[i].oid, value : varbinds[i].value.toString(), type : ObjectType[varbinds[i].type]});
+                    }
+                }
             }
         }
     });
@@ -51,13 +64,18 @@ router.get('/getnext/:oid', function (req, res) {
 
     session.getNext (oids, function (error, varbinds) {
         if (error) {
-            res.send (error.toString ());
+            res.json (error);
         } else {
             for (var i = 0; i < varbinds.length; i++) {
                 if (snmp.isVarbindError (varbinds[i]))
                     res.send (snmp.varbindError (varbinds[i]));
-                else
-                    res.json ({oid : varbinds[i].oid, value : varbinds[i].value.toString(), type : ObjectType[varbinds[i].type]});
+                else {
+                    if (varbinds[i].type == 67) {
+                        res.json ({oid : varbinds[i].oid, value : timeticks_conversion(varbinds[i].value.toString()), type : ObjectType[varbinds[i].type]});
+                    } else {
+                        res.json ({oid : varbinds[i].oid, value : varbinds[i].value.toString(), type : ObjectType[varbinds[i].type]});
+                    }
+                }
             }
         }
     });
@@ -79,7 +97,7 @@ router.get('/getbulk/:n/:m/:oid1/:oid2', function (req, res) {
     session.getBulk (oids, nonRepeaters, maxRepetitions, function (error,
             varbinds) {
         if (error) {
-            res.send (error.toString ());
+            res.json (error);
         } else {
             // step through the non-repeaters which are single varbinds
             for (var i = 0; i < nonRepeaters; i++) {
@@ -88,8 +106,13 @@ router.get('/getbulk/:n/:m/:oid1/:oid2', function (req, res) {
                 
                 if (snmp.isVarbindError (varbinds[i]))
                     res.send (snmp.varbindError (varbinds[i]));
-                else
-                    content += ('{"oid" : "' + varbinds[i].oid +'", "value" : "' + varbinds[i].value.toString() + '", "type" : "' + ObjectType[varbinds[i].type] + '"},');
+                else {
+                    if (varbinds[i].type == 67) {
+                        content += ('{"oid" : "' + varbinds[i].oid +'", "value" : "' +  timeticks_conversion(varbinds[i].value.toString()) + '", "type" : "' + ObjectType[varbinds[i].type] + '"},');
+                    } else {
+                        content += ('{"oid" : "' + varbinds[i].oid +'", "value" : "' + varbinds[i].value.toString() + '", "type" : "' + ObjectType[varbinds[i].type] + '"},');
+                    }
+                }
             }
             
             // then step through the repeaters which are varbind arrays
@@ -97,9 +120,14 @@ router.get('/getbulk/:n/:m/:oid1/:oid2', function (req, res) {
                 for (var j = 0; j < varbinds[i].length; j++) {
                     if (snmp.isVarbindError (varbinds[i][j]))
                         res.send (snmp.varbindError (varbinds[i][j]));
-                    else
-                    content += ('{"oid" : "' + varbinds[i][j].oid +'", "value" : "' + varbinds[i][j].value.toString() + '", "type" : "' + ObjectType[varbinds[i][j].type] + '"},');
-                }
+                        else {
+                            if (varbinds[i].type == 67) {
+                                content += ('{"oid" : "' + varbinds[i][j].oid +'", "value" : "' +  timeticks_conversion(varbinds[i][j].value.toString()) + '", "type" : "' + ObjectType[varbinds[i][j].type] + '"},');
+                            } else {
+                                content += ('{"oid" : "' + varbinds[i][j].oid +'", "value" : "' + varbinds[i][j].value.toString() + '", "type" : "' + ObjectType[varbinds[i][j].type] + '"},');
+                            }
+                        }
+                    }
             };
             content = "[" + content + "]";
             res.send(JSON.parse(content.replace(",]", "]")));
@@ -127,7 +155,7 @@ router.put('/set/:oid/:type/:value', function (req, res) {
 
     session.set (varbinds, function (error, varbinds) {
         if (error) {
-            res.send (error.toString ());
+            res.json (error);
         } else {
             for (var i = 0; i < varbinds.length; i++)
                 res.json ({oid : varbinds[i].oid, value : varbinds[i].value.toString(), type : ObjectType[varbinds[i].type]});
@@ -145,8 +173,9 @@ router.get('/walk/:oid', function (req, res) {
     var content = "";
 
     function doneCb (error) {
-        if (error)
-            console.error (error.toString ());
+        if (error) {
+            res.json (error);
+        }   
         content = "[" + content + "]";
         content = content.replace(",]", "]");
         res.json(JSON.parse(content));
@@ -156,8 +185,12 @@ router.get('/walk/:oid', function (req, res) {
         for (var i = 0; i < varbinds.length; i++) {
             if (snmp.isVarbindError (varbinds[i]))
                 console.error (snmp.varbindError (varbinds[i]));
-            else 
-                content += '{"oid" : "' + varbinds[i].oid +'", "value" : ' + JSON.stringify(varbinds[i].value.toString()) + ', "type" : "' + ObjectType[varbinds[i].type] + '"},';         
+            else {
+                if (varbinds[i].value == 67) {
+                    content += '{"oid" : "' + varbinds[i].oid +'", "value" : ' + timeticks_conversion(varbinds[i].value.toString()) + ', "type" : "' + ObjectType[varbinds[i].type] + '"},';        
+                } else {
+                    content += '{"oid" : "' + varbinds[i].oid +'", "value" : ' + JSON.stringify(varbinds[i].value.toString()) + ', "type" : "' + ObjectType[varbinds[i].type] + '"},';                         }
+            }
         }
     }
 
@@ -176,8 +209,9 @@ router.get('/subtree/:oid', function (req, res) {
     var content = "";
     
     function doneCb (error) {
-        if (error)
-            console.error (error.toString ());
+        if (error) {
+            res.json (error);
+        }            
         content = "[" + content + "]";
         content = content.replace(",]", "]");
         res.json(JSON.parse(content));
@@ -188,7 +222,10 @@ router.get('/subtree/:oid', function (req, res) {
             if (snmp.isVarbindError (varbinds[i]))
                 console.error (snmp.varbindError (varbinds[i]));
             else {
-                content += '{"oid" : "' + varbinds[i].oid +'", "value" : ' + JSON.stringify(varbinds[i].value.toString()) + ', "type" : "' + ObjectType[varbinds[i].type] + '"},';         
+                if (varbinds[i].value == 67) {
+                    content += '{"oid" : "' + varbinds[i].oid +'", "value" : ' + timeticks_conversion(varbinds[i].value.toString()) + ', "type" : "' + ObjectType[varbinds[i].type] + '"},';        
+                } else {
+                    content += '{"oid" : "' + varbinds[i].oid +'", "value" : ' + JSON.stringify(varbinds[i].value.toString()) + ', "type" : "' + ObjectType[varbinds[i].type] + '"},';                         }
             }
         
         }
