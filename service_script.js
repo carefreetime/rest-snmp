@@ -3,6 +3,7 @@ var App = (function () {
         console.log('bind event');
         $('#get_submit').on('click', _getsomething);
         $('#getbulk_submit').on('click', _getbulk);
+        $('#set_submit').on('click', _set);
         $('#refresh').on('click', _refresh);
     }
 
@@ -212,6 +213,49 @@ var App = (function () {
                         `);
                     }    
                 }   
+            },
+            error : function(jqXHR) {
+                console.log(jqXHR);
+            }
+        });
+    }
+
+    function _set() {
+        $('#table').removeClass('hidden_text');
+        $('#tbody').html("");
+        
+        var oid = $('#oid3').val();
+        var type = $('#type').val();
+        var value = $('#value').val();
+
+        $.ajax({
+            url : `http://163.22.32.174:4000/set/` + oid + `/` + type + `/` + value,
+            type : 'put',
+            dataType : 'json',
+            data : JSON.stringify({
+                oid : $('#oid').val(),
+                type : $('#type').val(),
+                value : $('#value').val()
+            }),
+            success : function(data) {
+                console.log('success');
+                if(value == '""') {
+                    $('#tbody').append(`
+                        <tr>
+                            <td bgcolor="#AAAAAA">`+oid+`</td>
+                            <td bgcolor="#AAAAAA">`+type+`</td>
+                            <td bgcolor="#AAAAAA"></td>
+                        </tr>
+                    `);
+                } else {
+                    $('#tbody').append(`
+                        <tr>
+                            <td>`+oid+`</td>
+                            <td>`+type+`</td>
+                            <td>`+value+`</td>
+                        </tr>
+                    `);
+                }
             },
             error : function(jqXHR) {
                 console.log(jqXHR);
