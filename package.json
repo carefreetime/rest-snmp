@@ -9,6 +9,7 @@
   "dependencies": {
     "asn1-ber": "^1.0.2",
     "bunyan": "^1.8.12",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "nodemon": "^1.17.4",
     "snmpjs": "^0.1.8",
