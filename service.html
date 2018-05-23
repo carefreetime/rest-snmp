@@ -74,7 +74,7 @@
             </tbody>
         </table>
         <h1 class="col-md-12">Choose Service</h1>
-        <select class="custom-select col-md-2" id="selectId" onchange="OnChange()">
+        <select class="custom-select col-md-2" id="selectId" onchange="PDUOnChange()">
             <option selected value="0">Choose One</option>
             <option value="1">Get</option>
             <option value="2">GetNext</option>
@@ -99,36 +99,30 @@
             </div>            
             <div id="getbulk" class="hidden_text">
                 <div class="form-group row" id="getbulk">
-                        <label for="oid" class="col-md-1 col-form-label text-right">n</label>
+                        <label for="n" class="col-md-1 col-form-label text-right">n</label>
                         <div class="col-md-1">
-                            <input type="text" class="form-control" id="n">
+                            <input type="text" class="form-control" id="n" onchange="NOnChange()">
                         </div>
-                        <label for="oid" class="col-md-1 col-form-label text-right">m</label>
+                        <label for="m" class="col-md-1 col-form-label text-right">m</label>
                         <div class="col-md-1">
                             <input type="text" class="form-control" id="m">
                         </div>
-                        <label for="oid" class="col-md-1 col-form-label text-right">oid1</label>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control" id="oid1">
+                        <div class="col-md-8">
+                            <div class="row" id="getbulk_oids"></div>                            
                         </div>
-                        <label for="oid" class="col-md-1 col-form-label text-right">oid2</label>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control" id="oid2">
-                        </div>
-                        <button type="submit" class="btn btn-primary" id="getbulk_submit">Submit</button>
                     </div>
             </div>
             <div id="set" class="hidden_text">
                 <div class="form-group row" id="set">
                     <label for="oid" class="col-md-1 col-form-label text-right">oid</label>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="oid3">
+                        <input type="text" class="form-control" id="oid0">
                     </div>
-                    <label for="oid" class="col-md-1 col-form-label text-right">type</label>
+                    <label for="type" class="col-md-1 col-form-label text-right">type</label>
                     <div class="col-md-2">
                         <input type="text" class="form-control" id="type">
                     </div>
-                    <label for="oid" class="col-md-1 col-form-label text-right">value</label>
+                    <label for="value" class="col-md-1 col-form-label text-right">value</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="value">
                     </div>
@@ -186,8 +180,25 @@
                 $("#set").addClass("hidden_text");
             }
         }
-        function OnChange() {
+        function PDUOnChange() {
             ChangeClass("selectId");
+        }
+        function NOnChange() {
+            $('#getbulk_oids').html("");
+            var n = document.getElementById("n").value;
+            console.log(n);
+            for (var i = 1; i <= n; i++) {
+                console.log(i);
+                $('#getbulk_oids').append(`
+                    <label for="oid" class="col-md-1 col-form-label text-right">oid`+i+`</label>
+                    <input type="text" class="col-md-2 form-control" id="oid`+i+`">                
+                `);
+            }
+            var m = ++n;
+            $('#getbulk_oids').append(`
+                <label for="oid" class="col-md-1 col-form-label text-right">oid`+m+`</label>
+                <input type="text" class="col-md-2 form-control" id="oid`+m+`">                
+            `);
         }
     </script>
     <script src="service_script.js"></script>
