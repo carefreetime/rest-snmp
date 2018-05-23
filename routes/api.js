@@ -81,12 +81,13 @@ router.get('/getnext/:oid', function (req, res) {
     });
 });
 
-router.get('/getbulk/:n/:m/:oid1/:oid2', function (req, res) {
+router.get('/getbulk/:n/:m/:oids', function (req, res) {
 
-    var nonRepeaters = 1;
-    var maxRepetitions = 3;
-    
-    var oids = [req.params.oid1, req.params.oid2];
+    var nonRepeaters = parseInt(req.params.n);
+    var maxRepetitions = parseInt(req.params.m);
+
+    var s = req.params.oids;
+    var oids = s.split(",");
     
     var options = 1;
 
