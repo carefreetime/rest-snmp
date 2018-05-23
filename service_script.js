@@ -182,11 +182,15 @@ var App = (function () {
 
         var n = $('#n').val();
         var m = $('#m').val();
-        var oid1 = $('#oid1').val();
-        var oid2 = $('#oid2').val();
+        
+        var oids = '';
+        for (var i = 1; i <= n; i++) {
+            oids += ($('#oid' + i).val()) + ',';
+        }    
+        oids += ($('#oid' + (parseInt(n) + 1)).val());
 
         $.ajax ({
-            url : `http://163.22.32.174:4000/getbulk/` + n + `/` + m + `/` + oid1 + `/` + oid2,
+            url : `http://163.22.32.174:4000/getbulk/` + n + `/` + m + `/` + oids,
             type : 'get',
             dataType : 'json',
             success : function(data) {
@@ -224,7 +228,7 @@ var App = (function () {
         $('#table').removeClass('hidden_text');
         $('#tbody').html("");
         
-        var oid = $('#oid3').val();
+        var oid = $('#oid0').val();
         var type = $('#type').val();
         var value = $('#value').val();
 
