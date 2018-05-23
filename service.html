@@ -110,6 +110,9 @@
                         <div class="col-md-8">
                             <div class="row" id="getbulk_oids"></div>                            
                         </div>
+                        <div class="col-md-2 offset-md-10 hidden_text" id="getbulk_button">
+                            <button type="submit" class="btn btn-primary" id="getbulk_submit">Submit</button>                
+                        </div>
                     </div>
             </div>
             <div id="set" class="hidden_text">
@@ -185,19 +188,24 @@
         }
         function NOnChange() {
             $('#getbulk_oids').html("");
+            $("#getbulk_button").removeClass("hidden_text");
+
             var n = document.getElementById("n").value;
-            console.log(n);
             for (var i = 1; i <= n; i++) {
-                console.log(i);
                 $('#getbulk_oids').append(`
                     <label for="oid" class="col-md-1 col-form-label text-right">oid`+i+`</label>
-                    <input type="text" class="col-md-2 form-control" id="oid`+i+`">                
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="oid`+i+`">
+                    </div>                
                 `);
             }
+
             var m = ++n;
             $('#getbulk_oids').append(`
                 <label for="oid" class="col-md-1 col-form-label text-right">oid`+m+`</label>
-                <input type="text" class="col-md-2 form-control" id="oid`+m+`">                
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="oid`+m+`">
+                </div>
             `);
         }
     </script>
