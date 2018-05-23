@@ -10,8 +10,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+   
 	<style type="text/css">
 		body {
 			background-image: url("https://www.xkl.com/wp-content/uploads/2015/09/networkDesign.jpg");
@@ -42,12 +43,18 @@
 				    	    		<input name="remember" type="checkbox" value="Remember Me"> Remember Me
 				    	    	</label>
 				    	    </div>
-				    		<input class="btn btn-lg btn-success btn-block" type="submit" value="Connect" formaction="service.html">
+				    		<input class="btn btn-lg btn-success btn-block" type="submit" value="Connect" formaction="service.html" id="connect_submit">
 				    	</fieldset>
 				      	</form>
 				    </div>
 				</div>
 			</div>
 		</div>
+		<script src="index_script.js"></script>
+		<script>
+			$(document).ready(function () {
+				App.init();
+			});
+		</script>
 </body>
 </html>
