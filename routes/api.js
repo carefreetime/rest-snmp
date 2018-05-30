@@ -32,7 +32,7 @@ function timeticks_conversion (timeticks) {
     return (d+':'+h+':'+m+':'+s);
 }
 
-router.post('/:ip/:community', function (req, res, next) {    
+router.post('/:ip/:community', function (req, res, next) {   
     var ipcommunityData = {
         ip: req.params.ip,
         community: req.params.community
@@ -44,15 +44,34 @@ router.post('/:ip/:community', function (req, res, next) {
         } else {
             req.session.ip = req.params.ip;
             req.session.community = req.params.community;
-            // console.log(req.session);
-            return 0;
+            return res.redirect('/');
         }
     });
+})
+
+router.get('/delete', function (req, res) {
+    var ip = req.session.ip;
+    if (req.session) {
+        // delete session object
+        req.session.destroy(function (err) {
+        if (err) {
+            return next(err);
+        } else {
+            db.collection('ipcommunities').remove({'ip' : ip});
+            return res.redirect('/');
+        }
+        });
+    }
 })
 
 router.get('/get/:oid', function (req, res) {
     var target = req.session.ip;
     var community = req.session.community;
+
+    if (req.session.ip == null || req.session.community == null) {
+        return res.redirect('/');
+    }
+
     var version = 0;
     var oids = [req.params.oid];
 
@@ -80,6 +99,11 @@ router.get('/get/:oid', function (req, res) {
 router.get('/getnext/:oid', function (req, res) {
     var target = req.session.ip;
     var community = req.session.community;
+
+    if (req.session.ip == null || req.session.community == null) {
+        return res.redirect('/');
+    }
+
     var version = 0;
     var oids = [req.params.oid];
 
@@ -107,6 +131,10 @@ router.get('/getnext/:oid', function (req, res) {
 router.get('/getbulk/:n/:m/:oids', function (req, res) {
     var target = req.session.ip;
     var community = req.session.community;
+
+    if (req.session.ip == null || req.session.community == null) {
+        return res.redirect('/');
+    }
 
     var nonRepeaters = parseInt(req.params.n);
     var maxRepetitions = parseInt(req.params.m);
@@ -164,6 +192,11 @@ router.get('/getbulk/:n/:m/:oids', function (req, res) {
 router.put('/set/:oid/:type/:value', function (req, res) {
     var target = req.session.ip;
     var community = req.session.community;
+
+    if (req.session.ip == null || req.session.community == null) {
+        return res.redirect('/');
+    }
+
     var ty;
 
     for (var t in ObjectType) {
@@ -194,6 +227,10 @@ router.put('/set/:oid/:type/:value', function (req, res) {
 router.get('/walk/:oid', function (req, res) {
     var target = req.session.ip;
     var community = req.session.community;
+
+    if (req.session.ip == null || req.session.community == null) {
+        return res.redirect('/');
+    }
 
     var version = 0;
     var oid = req.params.oid;
@@ -233,6 +270,10 @@ router.get('/subtree/:oid', function (req, res) {
     var target = req.session.ip;
     var community = req.session.community;
 
+    if (req.session.ip == null || req.session.community == null) {
+        return res.redirect('/');
+    }
+    
     var version = 0;
     var oid = req.params.oid;
 
