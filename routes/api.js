@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
+var Ipcommunity = require('../models/ipcommunity'); 
+var mongoose = require('mongoose');
+//connect to MongoDB
+var db = mongoose.connection;
 
 var snmp = require ("../");
-var target = '10.32.21.206';
-var community = 'public';
+
 var ObjectType = {
 	1: "Boolean",
 	2: "Integer",
@@ -29,8 +32,27 @@ function timeticks_conversion (timeticks) {
     return (d+':'+h+':'+m+':'+s);
 }
 
-router.get('/get/:oid', function (req, res) {
+router.post('/:ip/:community', function (req, res, next) {    
+    var ipcommunityData = {
+        ip: req.params.ip,
+        community: req.params.community
+    }
 
+    Ipcommunity.create(ipcommunityData, function (error, ipcommunity) {
+        if (error) {
+            return next(error);
+        } else {
+            req.session.ip = req.params.ip;
+            req.session.community = req.params.community;
+            // console.log(req.session);
+            return 0;
+        }
+    });
+})
+
+router.get('/get/:oid', function (req, res) {
+    var target = req.session.ip;
+    var community = req.session.community;
     var version = 0;
     var oids = [req.params.oid];
 
@@ -56,7 +78,8 @@ router.get('/get/:oid', function (req, res) {
 });
 
 router.get('/getnext/:oid', function (req, res) {
-
+    var target = req.session.ip;
+    var community = req.session.community;
     var version = 0;
     var oids = [req.params.oid];
 
@@ -82,6 +105,8 @@ router.get('/getnext/:oid', function (req, res) {
 });
 
 router.get('/getbulk/:n/:m/:oids', function (req, res) {
+    var target = req.session.ip;
+    var community = req.session.community;
 
     var nonRepeaters = parseInt(req.params.n);
     var maxRepetitions = parseInt(req.params.m);
@@ -137,6 +162,8 @@ router.get('/getbulk/:n/:m/:oids', function (req, res) {
 });
 
 router.put('/set/:oid/:type/:value', function (req, res) {
+    var target = req.session.ip;
+    var community = req.session.community;
     var ty;
 
     for (var t in ObjectType) {
@@ -165,6 +192,8 @@ router.put('/set/:oid/:type/:value', function (req, res) {
 });
 
 router.get('/walk/:oid', function (req, res) {
+    var target = req.session.ip;
+    var community = req.session.community;
 
     var version = 0;
     var oid = req.params.oid;
@@ -201,6 +230,8 @@ router.get('/walk/:oid', function (req, res) {
 });
 
 router.get('/subtree/:oid', function (req, res) {
+    var target = req.session.ip;
+    var community = req.session.community;
 
     var version = 0;
     var oid = req.params.oid;
