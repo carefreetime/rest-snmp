@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 var Trap = require('./models/trap'); 
 
 //connect to MongoDB
-mongoose.connect('mongodb://localhost/traps');
+mongoose.connect('mongodb://localhost/rest_snmp');
 var db = mongoose.connection;
 
 //handle mongo error
