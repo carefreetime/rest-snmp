@@ -44,9 +44,14 @@ router.post('/:ip/:community', function (req, res, next) {
         } else {
             req.session.ip = req.params.ip;
             req.session.community = req.params.community;
-            return res.redirect('/');
+            return res.redirect('/service');
         }
     });
+})
+
+router.get('/service', function (req, res) {
+    console.log('service');
+    res.sendFile(path.join(__dirname + '/service.html'));
 })
 
 router.get('/delete', function (req, res) {
@@ -273,7 +278,7 @@ router.get('/subtree/:oid', function (req, res) {
     if (req.session.ip == null || req.session.community == null) {
         return res.redirect('/');
     }
-    
+
     var version = 0;
     var oid = req.params.oid;
 
