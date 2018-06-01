@@ -282,8 +282,24 @@ var App = (function () {
         });
     }
 
+    function _getAgentAddr() {
+        $.ajax({
+            url : `http://163.22.32.174:4000/session/`,
+            type : 'get',
+            dataType : 'json',
+            success : function(data) {
+                var ip = JSON.stringify(data.ip);
+                $('#ip_address').val(ip);
+            },
+            error : function(jqXHR) {
+                console.log(jqXHR);
+            }
+        });
+    }
+
     function init() {
         console.log('Hello');
+        _getAgentAddr();
         _getDefault('1.3.6.1.2.1.1.5.0', 'sysName');
         _getDefault('1.3.6.1.2.1.2.1.0', 'ifNumber');
         _getDefault('1.3.6.1.2.1.1.4.0', 'sysContact');

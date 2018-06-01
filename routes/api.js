@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-var Ipcommunity = require('../models/ipcommunity'); 
+var util = require('util');
+const Ipcommunity = require('../models/ipcommunity');
 var mongoose = require('mongoose');
 //connect to MongoDB
+mongoose.connect('mongodb://localhost/rest_snmp');
 var db = mongoose.connection;
 
 var snmp = require ("../");
@@ -44,14 +46,15 @@ router.post('/:ip/:community', function (req, res, next) {
         } else {
             req.session.ip = req.params.ip;
             req.session.community = req.params.community;
-            return res.redirect('/service');
+            return res.redirect('/session');
         }
-    });
+    });    
 })
 
-router.get('/service', function (req, res) {
-    console.log('service');
-    res.sendFile(path.join(__dirname + '/service.html'));
+router.get('/session', function (req, res) {
+    var session_ip = req.session.ip;
+    var session_community = req.session.community;
+    res.json({ip : session_ip, community : session_community});
 })
 
 router.get('/delete', function (req, res) {
@@ -313,5 +316,6 @@ router.get('/subtree/:oid', function (req, res) {
     session.subtree (oid, maxRepetitions, feedCb, doneCb);
 
 });
+
   
 module.exports = router;

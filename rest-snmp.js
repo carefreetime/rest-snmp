@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 
 //connect to MongoDB
-mongoose.connect('mongodb://localhost/ipcommunity');
+mongoose.connect('mongodb://localhost/rest_snmp');
 var db = mongoose.connection;
 
 //handle mongo error
