@@ -4,11 +4,26 @@ var App = (function () {
         $('#get_submit').on('click', _getsomething);
         $('#getbulk_submit').on('click', _getbulk);
         $('#set_submit').on('click', _set);
+        $('#logout').on('click', _logout);
         $('#refresh').on('click', _refresh);
     }
 
     function _refresh() {
         location.reload();
+    }
+
+    function _logout() {
+        $.ajax({
+            url : `http://163.22.32.174:4000/logout/`,
+            type :'get',
+            dataType : 'json',
+            success : function(data) {
+                console.log(data);
+            },
+            error : function(jqXHR) {
+                console.log(jqXHR);
+            }
+        });
     }
 
     function _getsomething() {

@@ -1,42 +1,49 @@
 var mongoose = require('mongoose');
 
 var TrapsSchema = new mongoose.Schema({
-    version: {
-        type: String
+    version : {
+        type : String
         },
-        community: {
+    community : {
+        type : String
+    },
+    time : {
+
+    },
+    pdu : {
+        op : {
             type: String
         },
-        op: {
+        enterprise : {
             type: String
         },
-        enterprise: {
-            type: String
-        },
-        agent_addr: {
+        agent_addr : {
             type: String
         } ,
-        generic_trap: {
+        generic_trap : {
             type: Number
         },
-        specific_trap: {
+        specific_trap : {
             type: Number
         },
-        time_stamp: {
+        time_stamp : {
             type: Number
         },
-        oid: {
-            type: String
-        },
-        typename: {
-            type: String
-        },
-        value: {
-            type: String
-        },
-        string_value: {
-            type: String
+        varbinds : {
+            oid : {
+                type: String
+            },
+            typename : {
+                type : String
+            },
+            value : {
+                type : String
+            },
+            string_value : {
+                type : String
+            }
         }
+    }
 });
 
 var Traps = mongoose.model('Traps', TrapsSchema);

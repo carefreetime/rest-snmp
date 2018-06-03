@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 var util = require('util');
 const Ipcommunity = require('../models/ipcommunity');
+const Trap = require('../models/trap');
 var mongoose = require('mongoose');
 //connect to MongoDB
 mongoose.connect('mongodb://localhost/rest_snmp');
@@ -57,17 +58,16 @@ router.get('/session', function (req, res) {
     res.json({ip : session_ip, community : session_community});
 })
 
-router.get('/delete', function (req, res) {
+router.get('/logout', function (req, res) {
     var ip = req.session.ip;
     if (req.session) {
         // delete session object
         req.session.destroy(function (err) {
-        if (err) {
-            return next(err);
-        } else {
-            db.collection('ipcommunities').remove({'ip' : ip});
-            return res.redirect('/');
-        }
+            if (err) {
+                return next(err);
+            } else {
+                db.collection('ipcommunities').remove({'ip' : ip});
+            }
         });
     }
 })
@@ -317,5 +317,13 @@ router.get('/subtree/:oid', function (req, res) {
 
 });
 
-  
+router.get('/gettrap', function (req, res) {
+    Trap.find({}, '', function (err, trap) {
+        if (err) {
+            console.log(err);
+        }
+        res.json(trap);
+    })
+});
+
 module.exports = router;
