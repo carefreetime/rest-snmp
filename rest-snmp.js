@@ -28,7 +28,12 @@ app.use(session({
   })
 }));
 
-app.use(cors());
+app.use(cors({
+	methods: ['GET', 'POST', 'PATCH', 'OPTION', 'DELETE'],
+	credentials: true,
+	origin: true
+}));
+
 //use body-parser middleware
 app.use(bodyParser.json());
 
