@@ -29,33 +29,36 @@
         <h1>Trap</h1>
         <table class="table table-dark">
             <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
+                <tr>
+                    <th scope="col">time</th>
+                    <th scope="col">pdu</th>
+                    <th scope="col">op</th>
+                    <th scope="col">enterprise</th>
+                    <th scope="col">agent_addr</th>
+                    <th scope="col">generic_trap</th>
+                    <th scope="col">specific_trap</th>
+                    <th scope="col">time_stamp</th>
+                    <th scope="col">varbinds</th>
+                    <th scope="col">oid</th>
+                    <th scope="col">typename</th>
+                    <th scope="col">value</th>
+                    <th scope="col">string_value</th>
+                </tr>
             </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
+            <tbody id="tbody">
             </tbody>
-          </table>
+        </table>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    
+        <script src="trap_script.js"></script>
+        <script>
+            $(document).ready(function () {
+                App.init();
+            });
+        </script>
     </body>
 </html>
