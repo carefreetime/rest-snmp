@@ -22,7 +22,7 @@ db.once('open', function () {
 
 var options = {
     addr: '163.22.32.174',
-    port: 12345,
+    port: 161,
     family: 'udp4',
 };
 
