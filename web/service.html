@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Service</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<style>
+    .hidden_text {
+        visibility: hidden;
+        height: 0px;
+    }
+    table{
+        width: 100%; 	
+        /*自動斷行*/
+        word-wrap: break-word;
+        table-layout: fixed;
+    }
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/parameters">REST SNMP</a>
+            
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/service">Service <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/traps">Traps</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/graph">Graph</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container" style="margin-top: 20px">
+        <div class="row">
+            <h1 class="col-md-12">Choose Service</h1>
+            <div class="col-sm-2 col-md-2 col-lg-2">
+                <select class="form-control" id="selectId">
+                    <option selected value="0">Choose One</option>
+                    <option value="1">Get</option>
+                    <option value="2">GetNext</option>
+                    <option value="3">GetBulk</option>
+                    <option value="4">GetSubTree</option>
+                    <option value="5">Walk</option>
+                    <option value="6">Set</option>
+                </select>
+            </div>
+            <form class="col-md-10">
+                <div id="get" class="hidden_text">
+                    <div class="form-group row" id="get">
+                        <label for="oid" class="col-md-1 col-form-label text-right">oid</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="oid">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="get_submit">Submit</button>
+                    </div>
+                </div>            
+                <div id="getbulk" class="hidden_text">
+                    <div class="form-group row" id="getbulk">
+                        <label for="n" class="col-md-2 col-form-label text-right">Nonrepeaters</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" id="n">
+                        </div>
+                        <label for="m" class="col-md-2 col-form-label text-right">Max-repetitions</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" id="m">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row" id="getbulk_oids"></div>                            
+                        </div>
+                        <div class="col-md-2 offset-md-10 hidden_text" id="getbulk_button">
+                            <button type="submit" class="btn btn-primary" id="getbulk_submit">Submit</button>                
+                        </div>
+                    </div>
+                </div>
+                <div id="set" class="hidden_text">
+                    <div class="form-group row" id="set">
+                        <label for="oid" class="col-md-1 col-form-label text-right">oid</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="oid0">
+                        </div>
+                        <label for="type" class="col-md-1 col-form-label text-right">type</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" id="type">
+                        </div>
+                        <label for="value" class="col-md-1 col-form-label text-right">value</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="value">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="set_submit">Submit</button>
+                    </div>
+                </div>                        
+            </form>   
+            <div id="table" class="hidden_text">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">oid</th>
+                            <th scope="col">type</th>
+                            <th scope="col">value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    
+    <script src="./web/js/service.js"></script>
+    <script>
+        $(document).ready(function () {
+            App.init();
+        }); 
+	</script>
+</body>
+</html>
