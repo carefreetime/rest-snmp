@@ -50,8 +50,20 @@ app.use('/', require('./routes/api'));
 // serve static files from template
 app.use(express.static(__dirname + '/'));
 
-app.get('/trap', function(req, res){
-  res.sendFile(__dirname + '/gettrap.html');
+app.get('/parameters', function(req, res){
+  res.sendFile(__dirname + '/web/parameters.html');
+});
+
+app.get('/service', function(req, res){
+  res.sendFile(__dirname + '/web/service.html');
+});
+
+app.get('/traps', function(req, res){
+  res.sendFile(__dirname + '/web/traps.html');
+});
+
+app.get('/graph', function(req, res){
+  res.sendFile(__dirname + '/web/graph.html');
 });
 
 //error handling middleware
@@ -70,18 +82,17 @@ var log = new bunyan({ name: 'snmpd', level: 'trace'});
 
 var trapd = snmp.createTrapListener({log: log});
 
-var dt = dateTime.create();
-var formatted = dt.format('Y-m-d H:M:S');
-
 trapd.on('trap',function(msg) {
-  // console.log(msg);
-  // console.log('-------------------------------------------------');
-  // console.log(util.inspect(snmp.message.serializer(msg), false, null, true));
-  // console.log('-=================================-');
-  // console.log(util.inspect(snmp.message.serializer(msg)));
-  // console.log(util.inspect(snmp.message.serializer(msg).pdu.varbinds));
-  // console.log('-=================================-');  
+  console.log(msg);
+  console.log('-------------------------------------------------');
+  console.log(util.inspect(snmp.message.serializer(msg), false, null, true));
+  console.log('-=================================-');
+  console.log(util.inspect(snmp.message.serializer(msg)));
+  console.log(util.inspect(snmp.message.serializer(msg).pdu.varbinds));
+  console.log('-=================================-');  
   io.emit('chat message', util.inspect(snmp.message.serializer(msg), false, null));
+  var dt = dateTime.create();
+  var formatted = dt.format('Y-m-d H:M:S'); 
   var traps = snmp.message.serializer(msg).pdu.varbinds;
   for (let object of traps) {
       var trapData = {
