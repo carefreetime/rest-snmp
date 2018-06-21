@@ -83,13 +83,7 @@ var log = new bunyan({ name: 'snmpd', level: 'trace'});
 var trapd = snmp.createTrapListener({log: log});
 
 trapd.on('trap',function(msg) {
-  console.log(msg);
-  console.log('-------------------------------------------------');
-  console.log(util.inspect(snmp.message.serializer(msg), false, null, true));
-  console.log('-=================================-');
-  console.log(util.inspect(snmp.message.serializer(msg)));
-  console.log(util.inspect(snmp.message.serializer(msg).pdu.varbinds));
-  console.log('-=================================-');  
+  msg.snmpmsg = snmpmsgSerializer(msg.snmpmsg);
   io.emit('chat message', util.inspect(snmp.message.serializer(msg), false, null));
   var dt = dateTime.create();
   var formatted = dt.format('Y-m-d H:M:S'); 
@@ -118,6 +112,18 @@ trapd.on('trap',function(msg) {
       io.emit('chat message', trapData);              
   }
 });
+
+function snmpmsgSerializer(snmpmsg) {
+  // Guard against foo be null/undefined. Check that expected fields
+  // are defined.
+  if (!snmpmsg)
+      return snmpmsg;
+  var obj = {
+      // Create the object to be logged.
+      snmpmsg: 'snmpmsg'
+  }
+  return obj;
+};
 
 function trapcreate(trapData) {
   Trap.create(trapData, function (error, trap) {
