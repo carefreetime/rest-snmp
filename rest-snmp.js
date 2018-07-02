@@ -66,6 +66,10 @@ app.get('/graph', function(req, res){
   res.sendFile(__dirname + '/web/graph.html');
 });
 
+app.get('/task', function(req, res){
+  res.sendFile(__dirname + '/web/task.html');
+});
+
 //error handling middleware
 app.use(function (err, req, res, next) {
   // console.log(err);
@@ -83,13 +87,6 @@ var log = new bunyan({ name: 'snmpd', level: 'trace'});
 var trapd = snmp.createTrapListener({log: log});
 
 trapd.on('trap',function(msg) {
-  console.log(msg);
-  console.log('-------------------------------------------------');
-  console.log(util.inspect(snmp.message.serializer(msg), false, null, true));
-  console.log('-=================================-');
-  console.log(util.inspect(snmp.message.serializer(msg)));
-  console.log(util.inspect(snmp.message.serializer(msg).pdu.varbinds));
-  console.log('-=================================-');  
   io.emit('chat message', util.inspect(snmp.message.serializer(msg), false, null));
   var dt = dateTime.create();
   var formatted = dt.format('Y-m-d H:M:S'); 

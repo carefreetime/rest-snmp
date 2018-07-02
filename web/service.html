@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Service</title>
+    <title>Graph</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
+
 <style>
     .hidden_text {
         visibility: hidden;
@@ -20,41 +22,35 @@
         table-layout: fixed;
     }
 </style>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="/parameters">REST SNMP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="/parameters">REST SNMP</a>
-            
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/service">Service <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/traps">Traps</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/graph">Graph</a>
-                </li>
-            </ul>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/service">Service <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="/traps">Traps</a>
+            <a class="nav-item nav-link" href="/graph">Graph</a>
+            <a class="nav-item nav-link" href="/task">Task</a>
+            </div>
         </div>
     </nav>
+
     <div class="container" style="margin-top: 20px">
         <div class="row">
             <h1 class="col-md-12">Choose Service</h1>
-            <div class="col-sm-2 col-md-2 col-lg-2">
-                <select class="form-control" id="selectId">
-                    <option selected value="0">Choose One</option>
-                    <option value="1">Get</option>
-                    <option value="2">GetNext</option>
-                    <option value="3">GetBulk</option>
-                    <option value="4">GetSubTree</option>
-                    <option value="5">Walk</option>
-                    <option value="6">Set</option>
-                </select>
-            </div>
+            <select class="custom-select col-md-2" id="selectId" onchange="PDUOnChange()">
+                <option selected value="0">Choose One</option>
+                <option value="1">Get</option>
+                <option value="2">GetNext</option>
+                <option value="3">GetBulk</option>
+                <option value="4">GetSubTree</option>
+                <option value="5">Walk</option>
+                <option value="6">Set</option>
+            </select>
             <form class="col-md-10">
                 <div id="get" class="hidden_text">
                     <div class="form-group row" id="get">
@@ -62,26 +58,30 @@
                         <div class="col-md-4">
                             <input type="text" class="form-control" id="oid">
                         </div>
-                        <button type="submit" class="btn btn-primary" id="get_submit">Submit</button>
+                        <div class="wrapper">
+                            <span class="group-btn" >     
+                                <a href="#" class="btn btn-primary btn-md" id="get_submit">Submit</a>
+                            </span>
+                        </div>
                     </div>
                 </div>            
                 <div id="getbulk" class="hidden_text">
                     <div class="form-group row" id="getbulk">
-                        <label for="n" class="col-md-2 col-form-label text-right">Nonrepeaters</label>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control" id="n">
+                            <label for="n" class="col-md-2 col-form-label text-right">Nonrepeaters</label>
+                            <div class="col-md-1">
+                                <input type="text" class="form-control" id="n" onchange="NOnChange()">
+                            </div>
+                            <label for="m" class="col-md-2 col-form-label text-right">Max-Repetitions</label>
+                            <div class="col-md-1">
+                                <input type="text" class="form-control" id="m">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row" id="getbulk_oids"></div>                            
+                            </div>
+                            <div class="col-md-2 offset-md-10 hidden_text" id="getbulk_button">
+                                <button type="submit" class="btn btn-primary" id="getbulk_submit">Submit</button>                
+                            </div>
                         </div>
-                        <label for="m" class="col-md-2 col-form-label text-right">Max-repetitions</label>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control" id="m">
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row" id="getbulk_oids"></div>                            
-                        </div>
-                        <div class="col-md-2 offset-md-10 hidden_text" id="getbulk_button">
-                            <button type="submit" class="btn btn-primary" id="getbulk_submit">Submit</button>                
-                        </div>
-                    </div>
                 </div>
                 <div id="set" class="hidden_text">
                     <div class="form-group row" id="set">
@@ -120,12 +120,68 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-    
+
+    <script type="text/javascript">
+        function ChangeClass(obj) {
+            var selectObj = document.getElementById(obj);
+            if (selectObj.options[selectObj.options.selectedIndex].value == 3) {
+                $('#tbody').html("");
+                $("#table").addClass("hidden_text");
+                $("#get").addClass("hidden_text");
+                $("#getbulk").removeClass("hidden_text");
+                $("#set").addClass("hidden_text");
+            } else if (selectObj.options[selectObj.options.selectedIndex].value == 6) {
+                $('#tbody').html("");
+                $("#table").addClass("hidden_text");
+                $("#get").addClass("hidden_text");
+                $("#getbulk").addClass("hidden_text");
+                $("#set").removeClass("hidden_text");
+            } else if (selectObj.options[selectObj.options.selectedIndex].value == 0) {
+                $('#tbody').html("");
+                $("#table").addClass("hidden_text");
+                $("#table").addClass("hidden_text");
+                $("#get").addClass("hidden_text");
+                $("#getbulk").addClass("hidden_text");
+                $("#set").addClass("hidden_text");
+            } else {
+                $('#tbody').html("");
+                $("#table").addClass("hidden_text");
+                $("#get").removeClass("hidden_text");
+                $("#getbulk").addClass("hidden_text");
+                $("#set").addClass("hidden_text");
+            }
+        }
+        function PDUOnChange() {
+            ChangeClass("selectId");
+        }
+        function NOnChange() {
+            $('#getbulk_oids').html("");
+            $("#getbulk_button").removeClass("hidden_text");
+
+            var n = document.getElementById("n").value;
+            for (var i = 1; i <= n; i++) {
+                $('#getbulk_oids').append(`
+                    <label for="oid" class="col-md-1 col-form-label text-right">oid`+i+`</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="oid`+i+`">
+                    </div>                
+                `);
+            }
+
+            var m = ++n;
+            $('#getbulk_oids').append(`
+                <label for="oid" class="col-md-1 col-form-label text-right">oid`+m+`</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="oid`+m+`">
+                </div>
+            `);
+        }
+    </script>
     <script src="./web/js/service.js"></script>
     <script>
         $(document).ready(function () {
             App.init();
-        }); 
+        });
 	</script>
 </body>
 </html>

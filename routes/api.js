@@ -3,6 +3,7 @@ const router = express.Router();
 var util = require('util');
 const Ipcommunity = require('../models/ipcommunity');
 const Trap = require('../models/trap');
+var Task = require('../models/tasks');
 var mongoose = require('mongoose');
 //connect to MongoDB
 mongoose.connect('mongodb://localhost/rest_snmp');
@@ -325,5 +326,57 @@ router.get('/gettrap', function (req, res) {
         res.json(trap);
     })
 });
+
+router.get('/gettask', function (req, res) {
+    Task.find({}, '', function (err, trap) {
+        if (err) {
+            console.log(err);
+        }
+        res.json(trap);
+    })
+});
+
+router.get('/gettask/:tid', function (req, res) {
+    var ObjectId = require('mongodb').ObjectID;
+    var tid = req.params.tid;    
+    Task.find({'_id': ObjectId(tid)}, '', function (err, task) {
+        if (err) {
+            console.log(err);
+        }
+        res.json(task);
+    })
+});
+
+router.get('/store/:pdu/:oid/:second/:n/:m', function (req, res) {
+    var target = req.session.ip;
+    var community = req.session.community;
+
+    if (req.session.ip == null || req.session.community == null) {
+        return res.redirect('/');
+    }
+
+    var pdu = req.params.pdu;
+    var oid = req.params.oid;
+    var second = req.params.second;
+    var n = req.params.n;
+    var m = req.params.m;
+
+    var myobj = { pdu : pdu, oid : oid, second : second, n : n, m : m };
+    db.collection("tasks").insertOne(myobj, function(err, res) {
+        if (err) throw err;
+        console.log("1 document inserted");
+    });
+});
+
+router.get('/deletetask/:tid', function (req, res) {
+    var ObjectId = require('mongodb').ObjectID;
+    var tid = req.params.tid;
+    
+    db.collection('tasks').remove({ '_id': ObjectId(tid) }, function(err, tid) {
+        if(err)
+            console.log("ERROR!", err);    
+        // console.log("deleted  ", tid);
+    });
+})
 
 module.exports = router;
