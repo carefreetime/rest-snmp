@@ -45,7 +45,13 @@ var App = (function () {
             dataType : 'json',
             success : function(data) {
                 var ip = JSON.stringify(data.ip);
-                $('#ip_address').val(ip);
+                if (ip) {
+                    _bindEvent();
+                    $('#ip_address').val(ip);
+                } else {
+                    alert("Permission Denied.")
+                    location.href = '/';
+                }                
             },
             error : function(jqXHR) {
                 console.log(jqXHR);
@@ -64,7 +70,6 @@ var App = (function () {
         _getDefault('1.3.6.1.2.1.1.1.0', 'sysDescr');
         _getDefault('1.3.6.1.2.1.1.2.0', 'sysObjectId');
         _getDefault('1.3.6.1.2.1.1.3.0', 'sysUpTime');
-        _bindEvent();
     }
 
     return {

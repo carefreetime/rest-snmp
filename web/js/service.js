@@ -58,23 +58,30 @@ var App = (function () {
                 var type = data.type;
                 var value = JSON.stringify(data.value);
 
-                if(value == '""') {
-                    $('#tbody').append(`
-                        <tr>
-                            <td bgcolor="#AAAAAA">`+oid+`</td>
-                            <td bgcolor="#AAAAAA">`+type+`</td>
-                            <td bgcolor="#AAAAAA"></td>
-                        </tr>
-                    `);
+                if (oid) {
+                    if(value == '""') {
+                        $('#tbody').append(`
+                            <tr>
+                                <td bgcolor="#AAAAAA">`+oid+`</td>
+                                <td bgcolor="#AAAAAA">`+type+`</td>
+                                <td bgcolor="#AAAAAA"></td>
+                            </tr>
+                        `);
+                    } else {
+                        $('#tbody').append(`
+                            <tr>
+                                <td>`+oid+`</td>
+                                <td>`+type+`</td>
+                                <td>`+value+`</td>
+                            </tr>
+                        `);
+                    }
                 } else {
-                    $('#tbody').append(`
-                        <tr>
-                            <td>`+oid+`</td>
-                            <td>`+type+`</td>
-                            <td>`+value+`</td>
-                        </tr>
-                    `);
-                }              
+                    $('#table').addClass('hidden_text');
+                    var name = data.name;
+                    var message = data.message;
+                    alert(name + ' ' + message);
+                }                              
             },
             error : function(jqXHR) {
                 console.log(jqXHR);
@@ -93,22 +100,29 @@ var App = (function () {
                 var type = data.type;
                 var value = JSON.stringify(data.value);
 
-                if(value == '""') {
-                    $('#tbody').append(`
-                        <tr>
-                            <td bgcolor="#AAAAAA">`+oid+`</td>
-                            <td bgcolor="#AAAAAA">`+type+`</td>
-                            <td bgcolor="#AAAAAA"></td>
-                        </tr>
-                    `);
+                if (oid) {
+                    if(value == '""') {
+                        $('#tbody').append(`
+                            <tr>
+                                <td bgcolor="#AAAAAA">`+oid+`</td>
+                                <td bgcolor="#AAAAAA">`+type+`</td>
+                                <td bgcolor="#AAAAAA"></td>
+                            </tr>
+                        `);
+                    } else {
+                        $('#tbody').append(`
+                            <tr>
+                                <td>`+oid+`</td>
+                                <td>`+type+`</td>
+                                <td>`+value+`</td>
+                            </tr>
+                        `);
+                    }
                 } else {
-                    $('#tbody').append(`
-                        <tr>
-                            <td>`+oid+`</td>
-                            <td>`+type+`</td>
-                            <td>`+value+`</td>
-                        </tr>
-                    `);
+                    $('#table').addClass('hidden_text');
+                    var name = data.name;
+                    var message = data.message;
+                    alert(name + ' ' + message);
                 } 
             },
             error : function(jqXHR) {
@@ -129,23 +143,30 @@ var App = (function () {
                     var type = objects.type;
                     var value = JSON.stringify(objects.value);
 
-                    if(value == '""') {
-                        $('#tbody').append(`
-                            <tr>
-                                <td bgcolor="#AAAAAA">`+oid+`</td>
-                                <td bgcolor="#AAAAAA">`+type+`</td>
-                                <td bgcolor="#AAAAAA"></td>
-                            </tr>
-                        `);
+                    if (oid) {
+                        if(value == '""') {
+                            $('#tbody').append(`
+                                <tr>
+                                    <td bgcolor="#AAAAAA">`+oid+`</td>
+                                    <td bgcolor="#AAAAAA">`+type+`</td>
+                                    <td bgcolor="#AAAAAA"></td>
+                                </tr>
+                            `);
+                        } else {
+                            $('#tbody').append(`
+                                <tr>
+                                    <td>`+oid+`</td>
+                                    <td>`+type+`</td>
+                                    <td>`+value+`</td>
+                                </tr>
+                            `);
+                        }
                     } else {
-                        $('#tbody').append(`
-                            <tr>
-                                <td>`+oid+`</td>
-                                <td>`+type+`</td>
-                                <td>`+value+`</td>
-                            </tr>
-                        `);
-                    } 
+                        $('#table').addClass('hidden_text');
+                        var name = data.name;
+                        var message = data.message;
+                        alert(name + ' ' + message);
+                    }
                 }                  
             },
             error : function(jqXHR) {
@@ -166,23 +187,30 @@ var App = (function () {
                     var type = objects.type;
                     var value = JSON.stringify(objects.value);
 
-                    if(value == '""') {
-                        $('#tbody').append(`
-                            <tr>
-                                <td bgcolor="#AAAAAA">`+oid+`</td>
-                                <td bgcolor="#AAAAAA">`+type+`</td>
-                                <td bgcolor="#AAAAAA"></td>
-                            </tr>
-                        `);
+                    if (oid) {
+                        if(value == '""') {
+                            $('#tbody').append(`
+                                <tr>
+                                    <td bgcolor="#AAAAAA">`+oid+`</td>
+                                    <td bgcolor="#AAAAAA">`+type+`</td>
+                                    <td bgcolor="#AAAAAA"></td>
+                                </tr>
+                            `);
+                        } else {
+                            $('#tbody').append(`
+                                <tr>
+                                    <td>`+oid+`</td>
+                                    <td>`+type+`</td>
+                                    <td>`+value+`</td>
+                                </tr>
+                            `);
+                        }
                     } else {
-                        $('#tbody').append(`
-                            <tr>
-                                <td>`+oid+`</td>
-                                <td>`+type+`</td>
-                                <td>`+value+`</td>
-                            </tr>
-                        `);
-                    }    
+                        $('#table').addClass('hidden_text');
+                        var name = data.name;
+                        var message = data.message;
+                        alert(name + ' ' + message);
+                    }   
                 }   
             },
             error : function(jqXHR) {
@@ -214,22 +242,29 @@ var App = (function () {
                     var type = objects.type;
                     var value = JSON.stringify(objects.value);
 
-                    if(value == '""') {
-                        $('#tbody').append(`
-                            <tr>
-                                <td bgcolor="#AAAAAA">`+oid+`</td>
-                                <td bgcolor="#AAAAAA">`+type+`</td>
-                                <td bgcolor="#AAAAAA"></td>
-                            </tr>
-                        `);
+                    if (oid) {
+                        if(value == '""') {
+                            $('#tbody').append(`
+                                <tr>
+                                    <td bgcolor="#AAAAAA">`+oid+`</td>
+                                    <td bgcolor="#AAAAAA">`+type+`</td>
+                                    <td bgcolor="#AAAAAA"></td>
+                                </tr>
+                            `);
+                        } else {
+                            $('#tbody').append(`
+                                <tr>
+                                    <td>`+oid+`</td>
+                                    <td>`+type+`</td>
+                                    <td>`+value+`</td>
+                                </tr>
+                            `);
+                        }
                     } else {
-                        $('#tbody').append(`
-                            <tr>
-                                <td>`+oid+`</td>
-                                <td>`+type+`</td>
-                                <td>`+value+`</td>
-                            </tr>
-                        `);
+                        $('#table').addClass('hidden_text');
+                        var name = data.name;
+                        var message = data.message;
+                        alert(name + ' ' + message);
                     }    
                 }   
             },
@@ -258,23 +293,51 @@ var App = (function () {
             }),
             success : function(data) {
                 console.log('success');
-                if(value == '""') {
-                    $('#tbody').append(`
-                        <tr>
-                            <td bgcolor="#AAAAAA">`+oid+`</td>
-                            <td bgcolor="#AAAAAA">`+type+`</td>
-                            <td bgcolor="#AAAAAA"></td>
-                        </tr>
-                    `);
+                if (oid) {
+                    if(value == '""') {
+                        $('#tbody').append(`
+                            <tr>
+                                <td bgcolor="#AAAAAA">`+oid+`</td>
+                                <td bgcolor="#AAAAAA">`+type+`</td>
+                                <td bgcolor="#AAAAAA"></td>
+                            </tr>
+                        `);
+                    } else {
+                        $('#tbody').append(`
+                            <tr>
+                                <td>`+oid+`</td>
+                                <td>`+type+`</td>
+                                <td>`+value+`</td>
+                            </tr>
+                        `);
+                    }
                 } else {
-                    $('#tbody').append(`
-                        <tr>
-                            <td>`+oid+`</td>
-                            <td>`+type+`</td>
-                            <td>`+value+`</td>
-                        </tr>
-                    `);
+                    $('#table').addClass('hidden_text');
+                    var name = data.name;
+                    var message = data.message;
+                    alert(name + ' ' + message);
                 }
+            },
+            error : function(jqXHR) {
+                console.log(jqXHR);
+            }
+        });
+    }
+    
+    
+    function _getAgentAddr() {
+        $.ajax({
+            url : `http://163.22.32.174:4000/session/`,
+            type : 'get',
+            dataType : 'json',
+            success : function(data) {
+                var ip = JSON.stringify(data.ip);
+                if (!ip) {
+                    alert("Permission Denied.")
+                    location.href = '/';
+                } else {
+                     _bindEvent();
+                }                
             },
             error : function(jqXHR) {
                 console.log(jqXHR);
@@ -284,7 +347,7 @@ var App = (function () {
     
     function init() {
         console.log('Hello');
-        _bindEvent();
+        _getAgentAddr();
     }
 
     return {

@@ -161,18 +161,18 @@
             var n = document.getElementById("n").value;
             for (var i = 1; i <= n; i++) {
                 $('#getbulk_oids').append(`
-                    <label for="oid" class="col-md-1 col-form-label text-right">oid`+i+`</label>
+                    <label for="oid" class="col-md-1 col-form-label text-right" style="margin-top: 10px">oid`+i+`</label>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="oid`+i+`">
+                        <input type="text" class="form-control" style="margin-top: 10px" id="oid`+i+`">
                     </div>                
                 `);
             }
 
             var m = ++n;
             $('#getbulk_oids').append(`
-                <label for="oid" class="col-md-1 col-form-label text-right">oid`+m+`</label>
+                <label for="oid" class="col-md-1 col-form-label text-right" style="margin-top: 10px">oid`+m+`</label>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" id="oid`+m+`">
+                    <input type="text" class="form-control" style="margin-top: 10px" id="oid`+m+`">
                 </div>
             `);
         }

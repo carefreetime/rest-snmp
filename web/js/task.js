@@ -219,23 +219,25 @@ var App = (function () {
                 var value = JSON.stringify(data.value);
 
                 $("#list" + taskid).removeClass("hidden_text");
-                if(value == '""') {
-                    $('#task' + taskid).append(`
-                        <tr>
-                            <td bgcolor="#AAAAAA">`+oid+`</td>
-                            <td bgcolor="#AAAAAA">`+type+`</td>
-                            <td bgcolor="#AAAAAA"></td>
-                        </tr>
-                    `);
-                } else {
-                    $('#task' + taskid).append(`
-                        <tr>
-                            <td>`+oid+`</td>
-                            <td>`+type+`</td>
-                            <td>`+value+`</td>
-                        </tr>
-                    `);
-                } 
+                if (oid) {
+                    if(value == '""') {
+                        $('#task' + taskid).append(`
+                            <tr>
+                                <td bgcolor="#AAAAAA">`+oid+`</td>
+                                <td bgcolor="#AAAAAA">`+type+`</td>
+                                <td bgcolor="#AAAAAA"></td>
+                            </tr>
+                        `);
+                    } else {
+                        $('#task' + taskid).append(`
+                            <tr>
+                                <td>`+oid+`</td>
+                                <td>`+type+`</td>
+                                <td>`+value+`</td>
+                            </tr>
+                        `);
+                    } 
+                }
             },
             error : function(jqXHR) {
                 console.log(jqXHR);
@@ -254,22 +256,24 @@ var App = (function () {
                 var value = JSON.stringify(data.value);
 
                 $("#list" + taskid).removeClass("hidden_text");
-                if(value == '""') {
-                    $('#task' + taskid).append(`
-                        <tr>
-                            <td bgcolor="#AAAAAA">`+oid+`</td>
-                            <td bgcolor="#AAAAAA">`+type+`</td>
-                            <td bgcolor="#AAAAAA"></td>
-                        </tr>
-                    `);
-                } else {
-                    $('#task' + taskid).append(`
-                        <tr>
-                            <td>`+oid+`</td>
-                            <td>`+type+`</td>
-                            <td>`+value+`</td>
-                        </tr>
-                    `);
+                if (oid) {
+                    if(value == '""') {
+                        $('#task' + taskid).append(`
+                            <tr>
+                                <td bgcolor="#AAAAAA">`+oid+`</td>
+                                <td bgcolor="#AAAAAA">`+type+`</td>
+                                <td bgcolor="#AAAAAA"></td>
+                            </tr>
+                        `);
+                    } else {
+                        $('#task' + taskid).append(`
+                            <tr>
+                                <td>`+oid+`</td>
+                                <td>`+type+`</td>
+                                <td>`+value+`</td>
+                            </tr>
+                        `);
+                    } 
                 } 
             },
             error : function(jqXHR) {
@@ -290,22 +294,24 @@ var App = (function () {
                     var value = JSON.stringify(objects.value);
 
                     $("#list" + taskid).removeClass("hidden_text");
-                    if(value == '""') {
-                        $('#task' + taskid).append(`
-                            <tr>
-                                <td bgcolor="#AAAAAA">`+oid+`</td>
-                                <td bgcolor="#AAAAAA">`+type+`</td>
-                                <td bgcolor="#AAAAAA"></td>
-                            </tr>
-                        `);
-                    } else {
-                        $('#task' + taskid).append(`
-                            <tr>
-                                <td>`+oid+`</td>
-                                <td>`+type+`</td>
-                                <td>`+value+`</td>
-                            </tr>
-                        `);
+                    if (oid) {
+                        if(value == '""') {
+                            $('#task' + taskid).append(`
+                                <tr>
+                                    <td bgcolor="#AAAAAA">`+oid+`</td>
+                                    <td bgcolor="#AAAAAA">`+type+`</td>
+                                    <td bgcolor="#AAAAAA"></td>
+                                </tr>
+                            `);
+                        } else {
+                            $('#task' + taskid).append(`
+                                <tr>
+                                    <td>`+oid+`</td>
+                                    <td>`+type+`</td>
+                                    <td>`+value+`</td>
+                                </tr>
+                            `);
+                        } 
                     } 
                 }                  
             },
@@ -327,22 +333,24 @@ var App = (function () {
                     var value = JSON.stringify(objects.value);
 
                     $("#list" + taskid).removeClass("hidden_text");
-                    if(value == '""') {
-                        $('#task' + taskid).append(`
-                            <tr>
-                                <td bgcolor="#AAAAAA">`+oid+`</td>
-                                <td bgcolor="#AAAAAA">`+type+`</td>
-                                <td bgcolor="#AAAAAA"></td>
-                            </tr>
-                        `);
-                    } else {
-                        $('#task' + taskid).append(`
-                            <tr>
-                                <td>`+oid+`</td>
-                                <td>`+type+`</td>
-                                <td>`+value+`</td>
-                            </tr>
-                        `);
+                    if (oid) {
+                        if(value == '""') {
+                            $('#task' + taskid).append(`
+                                <tr>
+                                    <td bgcolor="#AAAAAA">`+oid+`</td>
+                                    <td bgcolor="#AAAAAA">`+type+`</td>
+                                    <td bgcolor="#AAAAAA"></td>
+                                </tr>
+                            `);
+                        } else {
+                            $('#task' + taskid).append(`
+                                <tr>
+                                    <td>`+oid+`</td>
+                                    <td>`+type+`</td>
+                                    <td>`+value+`</td>
+                                </tr>
+                            `);
+                        } 
                     }    
                 }   
             },
@@ -364,23 +372,25 @@ var App = (function () {
                     var value = JSON.stringify(objects.value);
 
                     $("#list" + taskid).removeClass("hidden_text");
-                    if(value == '""') {
-                        $('#task' + taskid).append(`
-                            <tr>
-                                <td bgcolor="#AAAAAA">`+oid+`</td>
-                                <td bgcolor="#AAAAAA">`+type+`</td>
-                                <td bgcolor="#AAAAAA"></td>
-                            </tr>
-                        `);
-                    } else {
-                        $('#task' + taskid).append(`
-                            <tr>
-                                <td>`+oid+`</td>
-                                <td>`+type+`</td>
-                                <td>`+value+`</td>
-                            </tr>
-                        `);
-                    }    
+                    if (oid) {
+                        if(value == '""') {
+                            $('#task' + taskid).append(`
+                                <tr>
+                                    <td bgcolor="#AAAAAA">`+oid+`</td>
+                                    <td bgcolor="#AAAAAA">`+type+`</td>
+                                    <td bgcolor="#AAAAAA"></td>
+                                </tr>
+                            `);
+                        } else {
+                            $('#task' + taskid).append(`
+                                <tr>
+                                    <td>`+oid+`</td>
+                                    <td>`+type+`</td>
+                                    <td>`+value+`</td>
+                                </tr>
+                            `);
+                        } 
+                    }   
                 }   
             },
             error : function(jqXHR) {
@@ -440,10 +450,30 @@ var App = (function () {
         });
     }
 
+    function _getAgentAddr() {
+        $.ajax({
+            url : `http://163.22.32.174:4000/session/`,
+            type : 'get',
+            dataType : 'json',
+            success : function(data) {
+                var ip = JSON.stringify(data.ip);
+                if (!ip) {
+                    alert("Permission Denied.")
+                    location.href = '/';
+                } else {
+                     _bindEvent();
+                     _task();
+                }                
+            },
+            error : function(jqXHR) {
+                console.log(jqXHR);
+            }
+        });
+    }
+    
     function init() {
         console.log('Hello');
-        _task();
-        _bindEvent();
+        _getAgentAddr();
     }
 
     return {

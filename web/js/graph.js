@@ -146,9 +146,30 @@ var App = (function () {
         });
     }
     
+    
+    function _getAgentAddr() {
+        $.ajax({
+            url : `http://163.22.32.174:4000/session/`,
+            type : 'get',
+            dataType : 'json',
+            success : function(data) {
+                var ip = JSON.stringify(data.ip);
+                if (!ip) {
+                    alert("Permission Denied.")
+                    location.href = '/';
+                } else {
+                     _bindEvent();
+                }                
+            },
+            error : function(jqXHR) {
+                console.log(jqXHR);
+            }
+        });
+    }
+    
     function init() {
         console.log('Hello');
-        _bindEvent();
+        _getAgentAddr();
     }
 
     return {
