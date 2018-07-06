@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 var util = require('util');
-const Ipcommunity = require('../models/ipcommunity');
 const Trap = require('../models/trap');
 var Task = require('../models/tasks');
 var mongoose = require('mongoose');
@@ -37,20 +36,9 @@ function timeticks_conversion (timeticks) {
 }
 
 router.post('/:ip/:community', function (req, res, next) {   
-    var ipcommunityData = {
-        ip: req.params.ip,
-        community: req.params.community
-    }
-
-    Ipcommunity.create(ipcommunityData, function (error, ipcommunity) {
-        if (error) {
-            return next(error);
-        } else {
-            req.session.ip = req.params.ip;
-            req.session.community = req.params.community;
-            return res.redirect('/session');
-        }
-    });    
+    req.session.ip = req.params.ip;
+    req.session.community = req.params.community;
+    return res.redirect('/session'); 
 })
 
 router.get('/session', function (req, res) {
