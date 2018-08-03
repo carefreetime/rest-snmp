@@ -23,6 +23,30 @@ var App = (function () {
                     var value = objects.pdu.varbinds.value;
                     var string_value = objects.pdu.varbinds.string_value;
                     
+                    var title = "";
+                    switch(generic_trap) {
+                        case 0 :
+                            title = "coldStart";
+                            break;
+                        case 1 :
+                            title = "warmStart";
+                            break;
+                        case 2 :
+                            title = "linkDown";
+                            break;
+                        case 3 :
+                            title = "linkUp";
+                            break;
+                        case 4 :
+                            title = "authenticationFailure";
+                            break;
+                        case 5 :
+                            title = "egpNeighborLoss";
+                            break;
+                        case 6 :
+                            title = "enterpriseSpecific";
+                            break;
+                    }
 
                     $('#tbody').append(`
                         <tr>
@@ -31,7 +55,7 @@ var App = (function () {
                             <td>`+op+`</td>
                             <td>`+enterprise+`</td>
                             <td>`+agent_addr+`</td>
-                            <td>`+generic_trap+`</td>
+                            <td data-toggle="tooltip" title="`+title+`">`+generic_trap+`</td>
                             <td>`+specific_trap+`</td>
                             <td>`+time_stamp+`</td>
                             <td></td>
@@ -41,7 +65,8 @@ var App = (function () {
                             <td>`+string_value+`</td>
                         </tr>
                     `);
-                }                           
+                }
+                $('[data-toggle="tooltip"]').tooltip();                            
             },
             error : function(jqXHR) {
                 console.log(jqXHR);

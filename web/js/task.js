@@ -114,7 +114,6 @@ var App = (function () {
 
     function stop() {
         var tid = $(this).parents('.list-group-item').attr('data-id');        
-        console.log(tid);
         $.ajax({
             url : `http://163.22.32.174:4000/gettask/` + tid,
             type : 'get',
@@ -208,7 +207,6 @@ var App = (function () {
     }
 
     function _get(oid, taskid) {
-        console.log('get');
         $.ajax({
             url : `http://163.22.32.174:4000/get/` + oid,
             type : 'get',
@@ -237,6 +235,12 @@ var App = (function () {
                             </tr>
                         `);
                     } 
+                } else {
+                    clearInterval(get);
+                    $("#list" + taskid).addClass('hidden_text');
+                    var name = data.name;
+                    var message = data.message;
+                    alert(name + ' ' + message);
                 }
             },
             error : function(jqXHR) {
@@ -274,7 +278,13 @@ var App = (function () {
                             </tr>
                         `);
                     } 
-                } 
+                } else {
+                    clearInterval(getnext);
+                    $("#list" + taskid).addClass('hidden_text');
+                    var name = data.name;
+                    var message = data.message;
+                    alert(name + ' ' + message);
+                }
             },
             error : function(jqXHR) {
                 console.log(jqXHR);
@@ -312,7 +322,13 @@ var App = (function () {
                                 </tr>
                             `);
                         } 
-                    } 
+                    } else {
+                        clearInterval(getsubtree);
+                        $("#list" + taskid).addClass('hidden_text');
+                        var name = data.name;
+                        var message = data.message;
+                        alert(name + ' ' + message);
+                    }
                 }                  
             },
             error : function(jqXHR) {
@@ -351,7 +367,13 @@ var App = (function () {
                                 </tr>
                             `);
                         } 
-                    }    
+                    } else {
+                        clearInterval(walk);
+                        $("#list" + taskid).addClass('hidden_text');
+                        var name = data.name;
+                        var message = data.message;
+                        alert(name + ' ' + message);
+                    } 
                 }   
             },
             error : function(jqXHR) {
@@ -390,7 +412,13 @@ var App = (function () {
                                 </tr>
                             `);
                         } 
-                    }   
+                    } else {
+                        clearInterval(getbulk);
+                        $("#list" + taskid).addClass('hidden_text');
+                        var name = data.name;
+                        var message = data.message;
+                        alert(name + ' ' + message);
+                    }
                 }   
             },
             error : function(jqXHR) {
