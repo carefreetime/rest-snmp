@@ -93,10 +93,35 @@ var App = (function () {
             }
         });
     }
+
+    function _getAgentAddr() {
+        $.ajax({
+            url : `http://163.22.32.174:4000/session/`,
+            type : 'get',
+            dataType : 'json',
+            success : function(data) {
+                var ip = JSON.stringify(data.ip);
+                $('#ip_address').val(ip);
+                if (ip == null) {
+                    alert('Permisson denied.');
+                    location.href = '/';
+                } else {
+                    _bindEvent();
+                }                
+            },
+            error : function(jqXHR) {
+                console.log(jqXHR);
+            }
+        });
+    }
     
     function init() {
         console.log('Hello');
+<<<<<<< HEAD
         _getAgentAddr();
+=======
+        _getAgentAddr();        
+>>>>>>> dea84389e3becb1535f5b8ec6b510e6fa5a32b3f
     }
 
     return {

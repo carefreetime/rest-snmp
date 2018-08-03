@@ -45,6 +45,7 @@ var App = (function () {
             dataType : 'json',
             success : function(data) {
                 var ip = JSON.stringify(data.ip);
+<<<<<<< HEAD
                 if (ip) {
                     _bindEvent();
                     $('#ip_address').val(ip);
@@ -52,6 +53,15 @@ var App = (function () {
                     alert("Permission Denied.")
                     location.href = '/';
                 }                
+=======
+                $('#ip_address').val(ip);
+                if (ip == null) {
+                    alert('Permisson denied.');
+                    location.href = '/';
+                } else {
+                    _bindEvent();
+                }
+>>>>>>> dea84389e3becb1535f5b8ec6b510e6fa5a32b3f
             },
             error : function(jqXHR) {
                 console.log(jqXHR);

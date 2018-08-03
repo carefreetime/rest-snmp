@@ -349,8 +349,32 @@ var App = (function () {
         console.log('123');
     }
 
+<<<<<<< HEAD
     var ip, community;
     
+=======
+    function _getAgentAddr() {
+        $.ajax({
+            url : `http://163.22.32.174:4000/session/`,
+            type : 'get',
+            dataType : 'json',
+            success : function(data) {
+                var ip = JSON.stringify(data.ip);
+                $('#ip_address').val(ip);
+                if (ip == null) {
+                    alert('Permisson denied.');
+                    location.href = '/';
+                } else {
+                    _bindEvent();
+                }
+            },
+            error : function(jqXHR) {
+                console.log(jqXHR);
+            }
+        });
+    }
+
+>>>>>>> dea84389e3becb1535f5b8ec6b510e6fa5a32b3f
     function init() {
         console.log('Hello');
         _getAgentAddr();
