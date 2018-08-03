@@ -181,7 +181,7 @@ router.get('/getbulk/:n/:m/:oids', function (req, res) {
                     }
             };
             content = "[" + content + "]";
-            res.send(JSON.parse(content.replace(",]", "]")));
+            res.json(JSON.parse(content.replace(",]", "]")));
         }
     });
 });
@@ -249,12 +249,8 @@ router.get('/walk/:oid', function (req, res) {
         for (var i = 0; i < varbinds.length; i++) {
             if (snmp.isVarbindError (varbinds[i]))
                 console.error (snmp.varbindError (varbinds[i]));
-            else {
-                if (varbinds[i].value == 67) {
-                    content += '{"oid" : "' + varbinds[i].oid +'", "value" : ' + timeticks_conversion(varbinds[i].value.toString()) + ', "type" : "' + ObjectType[varbinds[i].type] + '"},';        
-                } else {
-                    content += '{"oid" : "' + varbinds[i].oid +'", "value" : ' + JSON.stringify(varbinds[i].value.toString()) + ', "type" : "' + ObjectType[varbinds[i].type] + '"},';                         }
-            }
+            else 
+                content += '{"oid" : "' + varbinds[i].oid +'", "value" : ' + JSON.stringify(varbinds[i].value.toString()) + ', "type" : "' + ObjectType[varbinds[i].type] + '"},';                         
         }
     }
 
@@ -312,7 +308,7 @@ router.get('/gettrap', function (req, res) {
             console.log(err);
         }
         res.json(trap);
-    })
+    }).sort({"_id":-1})
 });
 
 router.get('/gettask', function (req, res) {

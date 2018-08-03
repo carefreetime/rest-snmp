@@ -19,7 +19,8 @@
     "nodemon": "^1.17.4",
     "snmpjs": "^0.1.8",
     "socket.io": "^2.1.1",
-    "util": "^0.10.3"
+    "util": "^0.10.3",
+    "winston": "^3.0.0"
   },
   "contributors": [
     {

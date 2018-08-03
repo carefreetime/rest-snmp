@@ -9,6 +9,7 @@ var bunyan = require('bunyan');
 var util = require('util');
 var Trap = require('./models/trap');
 var dateTime = require('node-datetime');
+var winston = require('winston');
 
 // set up express app
 const app = express();
@@ -79,8 +80,9 @@ app.use(function (err, req, res, next) {
 var options = {
   addr: '163.22.32.174',
   port: 161,
-  family: 'udp4',
+  family: 'udp4'
 };
+
 
 var log = new bunyan({ name: 'snmpd', level: 'trace'});
 
@@ -112,8 +114,7 @@ trapd.on('trap',function(msg) {
           }      
       }      
       trapcreate(trapData);    
-      io.emit('chat message', trapData);              
-  }
+    }
 });
 
 function trapcreate(trapData) {

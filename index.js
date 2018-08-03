@@ -1367,7 +1367,9 @@ function walkCb (req, error, varbinds) {
 				done = 1;
 			}
 		} else {
+			console.log('---');
 			req.doneCb (error);
+			
 			return;
 		}
 	}
