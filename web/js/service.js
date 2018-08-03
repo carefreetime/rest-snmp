@@ -3,27 +3,9 @@ var App = (function () {
         console.log('bind event');
         $('#get_submit').on('click', _getsomething);
         $('#getbulk_submit').on('click', _getbulk);
+        $('#check_submit').on('click', _check);
         $('#set_submit').on('click', _set);
-        $('#logout').on('click', _logout);
-        $('#refresh').on('click', _refresh);
-    }
-
-    function _refresh() {
-        location.reload();
-    }
-
-    function _logout() {
-        $.ajax({
-            url : `http://163.22.32.174:4000/logout/`,
-            type :'get',
-            dataType : 'json',
-            success : function(data) {
-                console.log(data);
-            },
-            error : function(jqXHR) {
-                console.log(jqXHR);
-            }
-        });
+        $('#add').on('click', _add);
     }
 
     function _getsomething() {
@@ -226,17 +208,21 @@ var App = (function () {
         var n = $('#n').val();
         var m = $('#m').val();
         
+        var sum = $('#sum').val();
+
         var oids = '';
-        for (var i = 1; i <= n; i++) {
+        for (var i = 1; i < sum; i++) {
             oids += ($('#oid' + i).val()) + ',';
         }    
-        oids += ($('#oid' + (parseInt(n) + 1)).val());
+        oids += ($('#oid' + sum).val());
+        
 
         $.ajax ({
             url : `http://163.22.32.174:4000/getbulk/` + n + `/` + m + `/` + oids,
             type : 'get',
             dataType : 'json',
             success : function(data) {
+                console.log(data);
                 for(let objects of data) {
                     var oid = objects.oid;
                     var type = objects.type;
@@ -274,7 +260,18 @@ var App = (function () {
         });
     }
 
-    function _set() {
+    function _check() {
+        var c_ip = $('#ip').val();
+        var c_community = $('#community').val();
+        if (c_ip == ip && c_community == community) {
+            _set();
+        } else {
+            alert("Permission Denied.");
+            location.reload();
+        }
+    }
+
+    function _set() {       
         $('#table').removeClass('hidden_text');
         $('#tbody').html("");
         
@@ -331,7 +328,8 @@ var App = (function () {
             type : 'get',
             dataType : 'json',
             success : function(data) {
-                var ip = JSON.stringify(data.ip);
+                ip = data.ip;
+                community = data.community;
                 if (!ip) {
                     alert("Permission Denied.")
                     location.href = '/';
@@ -344,6 +342,14 @@ var App = (function () {
             }
         });
     }
+
+    
+    function _add() {
+        var n = $('#n').val();
+        console.log('123');
+    }
+
+    var ip, community;
     
     function init() {
         console.log('Hello');
