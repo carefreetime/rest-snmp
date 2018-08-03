@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Graph</title>
+    <title>Service</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
@@ -31,7 +31,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/service">Service <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="/service">Service <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="/traps">Traps</a>
             <a class="nav-item nav-link" href="/graph">Graph</a>
             <a class="nav-item nav-link" href="/task">Task</a>
@@ -51,7 +51,7 @@
                 <option value="5">Walk</option>
                 <option value="6">Set</option>
             </select>
-            <form class="col-md-10">
+            <div class="col-md-10">
                 <div id="get" class="hidden_text">
                     <div class="form-group row" id="get">
                         <label for="oid" class="col-md-1 col-form-label text-right">oid</label>
@@ -68,14 +68,14 @@
                 <div id="getbulk" class="hidden_text">
                     <div class="form-group row" id="getbulk">
                             <label for="n" class="col-md-2 col-form-label text-right">Nonrepeaters</label>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" id="n" onchange="NOnChange()">
                             </div>
-                            <label for="m" class="col-md-2 col-form-label text-right">Max-Repetitions</label>
-                            <div class="col-md-1">
+                            <label for="m" class="col-md-3 col-form-label text-right">Max-Repetitions</label>
+                            <div class="col-md-2">
                                 <input type="text" class="form-control" id="m">
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <div class="row" id="getbulk_oids"></div>                            
                             </div>
                             <div class="col-md-2 offset-md-10 hidden_text" id="getbulk_button">
@@ -97,10 +97,37 @@
                         <div class="col-md-3">
                             <input type="text" class="form-control" id="value">
                         </div>
-                        <button type="submit" class="btn btn-primary" id="set_submit">Submit</button>
+                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#SetModal">Submit</button>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="SetModal" tabindex="-1" role="dialog" aria-labelledby="SetModalTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="SetModalTitle">Please input again</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="index_script">IP Address</label>
+                                    <input class="form-control" type="text" id="ip">
+                                </div>
+                                <div class="form-group">
+                                    <label for="community">Community</label>
+                                    <input class="form-control" type="text" id="community">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="check_submit" data-dismiss="modal">OK</button>
+                            </div>
+                        </div>
                     </div>
                 </div>                        
-            </form>   
+            </div>   
             <div id="table" class="hidden_text">
                 <table class="table table-dark">
                     <thead>
@@ -116,6 +143,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="sum" runat='server' />
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -151,30 +179,49 @@
                 $("#set").addClass("hidden_text");
             }
         }
+
         function PDUOnChange() {
             ChangeClass("selectId");
         }
+
+        var sum = 0;
+
         function NOnChange() {
             $('#getbulk_oids').html("");
             $("#getbulk_button").removeClass("hidden_text");
 
             var n = document.getElementById("n").value;
+            sum = n;
             for (var i = 1; i <= n; i++) {
                 $('#getbulk_oids').append(`
                     <label for="oid" class="col-md-1 col-form-label text-right" style="margin-top: 10px">oid`+i+`</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" style="margin-top: 10px" id="oid`+i+`">
-                    </div>                
-                `);
+                    </div>               
+                `);                    
             }
+            
 
-            var m = ++n;
             $('#getbulk_oids').append(`
-                <label for="oid" class="col-md-1 col-form-label text-right" style="margin-top: 10px">oid`+m+`</label>
+                <div class="col-md-1">
+                    <a class="btn btn-link">
+                        <i class="fa fa-plus-circle fa-2x" aria-hidden="true" id="add" style="color:green" onclick="Add()"></i>
+                    </a>   
+                </div>
+                <div class="col-md-12"></div>            
+            `);            
+        }
+
+        function Add() {
+            sum++;
+            $('#getbulk_oids').append(`
+                <label for="oid" class="col-md-1 col-form-label text-right" style="margin-top: 10px">oid`+sum+`</label>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" style="margin-top: 10px" id="oid`+m+`">
+                    <input type="text" class="form-control" style="margin-top: 10px" id="oid`+sum+`">
                 </div>
             `);
+            var a = document.getElementById("sum");
+            a.value = sum;
         }
     </script>
     <script src="./web/js/service.js"></script>
@@ -182,6 +229,15 @@
         $(document).ready(function () {
             App.init();
         });
-	</script>
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(function () {
+            var socket = io();
+            socket.on('chat message', function(msg){
+                alert('Trap in : ' + msg);
+            });
+        });
+    </script>
 </body>
 </html>
