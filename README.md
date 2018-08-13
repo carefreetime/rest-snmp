@@ -1,12 +1,20 @@
-### Installation
-1. Clone
-`git clone https://github.com/carefreetime/rest-snmp.git`
-2. Install node modules
-`cd rest-snmp
+## Installation
+### 1. Clone
+```
+git clone https://github.com/carefreetime/rest-snmp.git
+```
+
+### 2. Install node modules
+```
+cd rest-snmp
 npm install
-sudo apt install mongod`
-3. Run
-`sudo node rest-snmp.js`
+sudo apt install mongod
+```
+
+### 3. Run
+```
+sudo node rest-snmp
+```
 
 # SNMP API docs
 **實驗設備**
