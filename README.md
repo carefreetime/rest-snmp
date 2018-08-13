@@ -1,5 +1,14 @@
-SNMP API docs
-===
+### Installation
+1. Clone
+`git clone https://github.com/carefreetime/rest-snmp.git`
+2. Install node modules
+`cd rest-snmp
+npm install
+sudo apt install mongod`
+3. Run
+`sudo node rest-snmp.js`
+
+# SNMP API docs
 **實驗設備**
 - IP : `10.32.21.206`
 - Community : `public`
@@ -98,7 +107,7 @@ Get `/getnext/1.3.6.1.3`
 ### GetBulk
 **GetBulkRequest**
 Get `/getbulk/:n/:m/:oids`
-http://163.22.32.174:4000/getbulk/1/3/1.3.6.1.2.1.1.1,1.3.6.1.2.1.1.5
+http://163.22.32.174:4000/getbulk/2/3/1.3.6.1.2.1.1.1,1.3.6.1.2.1.1.5,1.3.6.1.2.1.1.6,1.3.6.1.2.1.2.2.1.10.18
 
 #### Request
 none
@@ -108,7 +117,7 @@ none
 Varbinds
 
 **範例**
-Get `/getbulk/1/3/1.3.6.1.2.1.1.1,1.3.6.1.2.1.1.5`
+Get `/getbulk/2/3/1.3.6.1.2.1.1.1,1.3.6.1.2.1.1.5,1.3.6.1.2.1.1.6,1.3.6.1.2.1.2.2.1.10.18`
 ```javascript=
 [
     {
@@ -123,13 +132,33 @@ Get `/getbulk/1/3/1.3.6.1.2.1.1.1,1.3.6.1.2.1.1.5`
     },
     {
         "oid": "1.3.6.1.2.1.1.6.0",
-        "value": "B11",
+        "value": "B123456",
         "type": "OctetString"
     },
     {
         "oid": "1.3.6.1.2.1.1.7.0",
         "value": "76",
         "type": "Integer"
+    },
+    {
+        "oid": "1.3.6.1.2.1.2.1.0",
+        "value": "21",
+        "type": "Integer"
+    },
+    {
+        "oid": "1.3.6.1.2.1.2.2.1.10.19",
+        "value": "0",
+        "type": "Counter"
+    },
+    {
+        "oid": "1.3.6.1.2.1.2.2.1.10.20",
+        "value": "0",
+        "type": "Counter"
+    },
+    {
+        "oid": "1.3.6.1.2.1.2.2.1.10.21",
+        "value": "0",
+        "type": "Counter"
     }
 ]
 ```
