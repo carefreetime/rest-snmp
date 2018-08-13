@@ -89,10 +89,7 @@ var log = new bunyan({ name: 'snmpd', level: 'trace'});
 var trapd = snmp.createTrapListener({log: log});
 
 trapd.on('trap',function(msg) {
-<<<<<<< HEAD
-=======
   msg.snmpmsg = snmpmsgSerializer(msg.snmpmsg);
->>>>>>> dea84389e3becb1535f5b8ec6b510e6fa5a32b3f
   io.emit('chat message', util.inspect(snmp.message.serializer(msg), false, null));
   var dt = dateTime.create();
   var formatted = dt.format('Y-m-d H:M:S'); 
